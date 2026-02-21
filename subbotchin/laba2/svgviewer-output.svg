@@ -1,0 +1,26 @@
+<svg width="400" height="400" viewBox="0 0 400 400">
+<!--background-->
+  <rect x="0" y="0" width="400" height="400" fill="rgb(0,200,200)"/>
+<!--ground-->
+  <rect x="0" y="200" width="400" height="200" fill="rgb(0,170,0)"/>
+<!--head-->
+  <ellipse cx="200" cy="200" rx="110" ry="100" fill="rgb(160,110,70)" stroke="black"/>
+<!--ears-->
+  <circle cx="130" cy="120" r="35" fill="rgb(160,110,70)" stroke="black"/>
+  <circle cx="270" cy="120" r="35" fill="rgb(160,110,70)" stroke="black"/>
+<!--eyes-->
+  <ellipse cx="170" cy="190" rx="7.5" ry="7.5" fill="black"/>
+  <ellipse cx="230" cy="190" rx="7.5" ry="7.5" fill="black"/>
+<!--nose-->
+  <ellipse cx="200" cy="230" rx="15" ry="10" fill="rgb(80,50,30)"/>
+<!--mouth-->
+  <path d="M180 250 A20 15 0 0 0 220 250" fill="none" stroke="black"/>
+<!--hat-->
+  <polygon points="170,105 230,105 200,30" fill="rgb(200,0,0)"/>
+  <polyline points="165,110 235,110 235,100 165,100" fill="white"/>
+  <circle cx="200" cy="30" r="10" fill="white"/>
+<!--text-->
+  <text x="5" y="395" fill="white" font-size="14">
+    Saenco Vladislav TI-256
+  </text>
+</svg>
