@@ -20,18 +20,6 @@ node* mknode(int v) {
 	return t;
 }
 
-node* insert(node* r, node *n) {
-	if(!r)
-		return n;
-
-	if(r->x > n->x)
-		r->a = insert(r->a, n);
-	else
-		r->b = insert(r->b, n);
-
-	return r;
-}
-
 void clear(node* r) {
 	if(!r)
 		return;
@@ -40,6 +28,36 @@ void clear(node* r) {
 	clear(r->b);
 
 	free(r);
+}
+
+node* insert(node* r, node *n) {
+	if(!r)
+		return n;
+
+	if(r == n)
+		return r;
+
+	if(n->a) {
+		r = insert(r, n->a);
+		n->a = NULL;
+	}
+
+	if(n->b) {
+		r = insert(r, n->b);
+		n->b = NULL;
+	}
+
+	if(r->x ==  n->x) {
+		clear(n);
+		return r;
+	}
+
+	if(r->x > n->x)
+		r->a = insert(r->a, n);
+	else
+		r->b = insert(r->b, n);
+
+	return r;
 }
 
 int height(node* r) {
@@ -84,6 +102,15 @@ int main(void) {
 	for(int i = -5; i < 10; i++)
 		root = insert(root, mknode(i));
 
+	node* sub = NULL;
+	for(int i = -10; i < 5; i++)
+		sub = insert(sub, mknode(i));
+
+	print(root);
+	printf("\n");
+
+	root = insert(sub, root);
+	root = insert(root, sub);
 	print(root);
 	printf("\n");
 

@@ -37,7 +37,7 @@ class Particle {
   constructor(x, y) {
     this.pos = createVector(x, y);
     this.vel = createVector(random(-3, 3), random(-3, 3));
-    this.r = 6;
+    this.r = random(3, 10);
     this.d = 2 * this.r;
     this.col = color(random(100, 255), random(100, 255), random(100, 255));
   }
@@ -79,9 +79,9 @@ function checkCollision(p1, p2) {
 
     if (speed < 0) return;
 
-    let impulse = normal.copy().mult(speed);
-    p1.vel.sub(impulse);
-    p2.vel.add(impulse);
+    let impulse = normal.copy().mult(2 * speed);
+    p1.vel.sub(impulse.copy().mult(p1.r / minDist));
+    p2.vel.add(impulse.copy().mult(p2.r / minDist));
 
     let overlap = minDist - distance;
     let correction = normal.copy().mult(overlap / 2);
