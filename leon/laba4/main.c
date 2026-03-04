@@ -99,28 +99,18 @@ void print(node* r) {
 int main(void) {
 
 	node* root = NULL;
-	for(int i = -5; i < 10; i++)
-		root = insert(root, mknode(i));
 
-	node* sub = NULL;
-	for(int i = -10; i < 5; i++)
-		sub = insert(sub, mknode(i));
-
-	print(root);
-	printf("\n");
-
-	root = insert(sub, root);
-	root = insert(root, sub);
-	print(root);
-	printf("\n");
-
-	node* v = find(root, 0);
-	print(v);
-	printf("\n");
+	root = insert(root, mknode(-50));
+	root = insert(root, mknode(50));
+	root = insert(root, mknode(1));
+	root = insert(root, mknode(10));
+	root = insert(root, mknode(8));
+	root = insert(root, mknode(0));
+	root = insert(root, mknode(9));
+	root = insert(root, mknode(100));
+	root = insert(root, mknode(13));
 
 
-	clear(root);
-	root = NULL;
 	print(root);
 	printf("\n");
 }
