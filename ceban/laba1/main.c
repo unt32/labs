@@ -408,7 +408,7 @@ main ()
 
 	read (n, a);
 
-	printAll (n, a);
+//	printAll (n, a);
 
 	edit (n, a);
 
