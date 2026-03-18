@@ -1,3 +1,6 @@
+import sys
+
+
 def bellman_ford_shortest_path(n, edges, source=1):
     
     H = [float('inf')] * (n + 1)
@@ -72,8 +75,8 @@ def print_adj_matrix(edges, n):
 edges = []
 print("Enter edges (format: from to weight), or empty line to finish:")
 
-while True:
-    line = input().strip()
+for line in sys.stdin:
+    line = line.strip()
     if not line:
         break
     try:
