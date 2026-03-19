@@ -35,7 +35,7 @@ void heap_sort(int a[], int n) {
 
 int main(void) {
 	int a[] = {12, 11, 13, 5, 34, 7, 1, -5, 19, 3, 6};
-	int n = (int)(sizeof(a) / sizeof(a[0]));
+	int n = sizeof(a) / sizeof(a[0]);
 
 	for (int i = 0; i < n; ++i) {
 		printf("%d ", a[i]);
