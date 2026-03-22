@@ -11,7 +11,7 @@
 #define CL    6
 
 #define NUM   0
-#define OPR 1
+#define OPR   1
 
 int prec(int op) {
 	if(op == MULT || op == DIV)
