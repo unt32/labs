@@ -6,7 +6,7 @@ def read_adj():
 
     n = 0
     while n <= 0:
-        print("Enter the number of vertices: ", end='')
+        print("Enter the number of vertices: ", end="")
         try:
             n = int(input())
             if n <= 0:
@@ -18,7 +18,7 @@ def read_adj():
 
     for i in range(1, n + 1):
         neighbors = []
-        print(f"{i} : ", end='')
+        print(f"{i} : ", end="")
 
         try:
             line = input().strip()
@@ -104,7 +104,7 @@ def main():
     if adj_list:
         # print_adj(adj_list)
 
-        print("\nEnter starting vertex for Breadth-First Search: ", end='')
+        print("\nEnter starting vertex for Breadth-First Search: ", end="")
         try:
             start_vertex = int(input())
 

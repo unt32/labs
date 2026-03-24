@@ -1,65 +1,69 @@
 import math
- 
- 
+
+
 def comb(n, k):
     return math.comb(n, k)
- 
- 
+
+
 def normal_cdf(x):
     return 0.5 * (1 + math.erf(x / math.sqrt(2)))
- 
- 
+
+
 def total_probability(priors, conditional_probs):
     return sum(p * q for p, q in zip(priors, conditional_probs))
- 
- 
+
+
 def bayes(priors, conditional_probs, index):
-    return priors[index] * conditional_probs[index] / total_probability(priors, conditional_probs)
- 
- 
+    return (
+        priors[index]
+        * conditional_probs[index]
+        / total_probability(priors, conditional_probs)
+    )
+
+
 def bernoulli(n, p, k):
-    return comb(n, k) * (p ** k) * ((1 - p) ** (n - k))
- 
- 
+    return comb(n, k) * (p**k) * ((1 - p) ** (n - k))
+
+
 def bernoulli_at_least(n, p, k):
     return sum(bernoulli(n, p, i) for i in range(k, n + 1))
- 
- 
+
+
 def bernoulli_at_most(n, p, k):
     return sum(bernoulli(n, p, i) for i in range(k + 1))
- 
- 
+
+
 def poisson(lmbd, k):
-    return math.exp(-lmbd) * (lmbd ** k) / math.factorial(k)
- 
- 
+    return math.exp(-lmbd) * (lmbd**k) / math.factorial(k)
+
+
 def poisson_at_least(lmbd, k):
     return 1 - sum(poisson(lmbd, i) for i in range(k))
- 
- 
+
+
 def poisson_at_most(lmbd, k):
     return sum(poisson(lmbd, i) for i in range(k + 1))
- 
- 
+
+
 def poisson_between(lmbd, a, b):
     return sum(poisson(lmbd, i) for i in range(a, b + 1))
- 
- 
+
+
 def moivre_laplace_local(n, p, k):
     q = 1 - p
     x = (k - n * p) / math.sqrt(n * p * q)
-    phi = (1 / math.sqrt(2 * math.pi)) * math.exp(-(x ** 2) / 2)
+    phi = (1 / math.sqrt(2 * math.pi)) * math.exp(-(x**2) / 2)
     return phi / math.sqrt(n * p * q)
- 
- 
+
+
 def moivre_laplace_integral(n, p, a, b):
     q = 1 - p
     sigma = math.sqrt(n * p * q)
     z1 = (a - n * p) / sigma
     z2 = (b - n * p) / sigma
     return normal_cdf(z2) - normal_cdf(z1)
- 
- 
+
+
 def normal_binomial(n, p, k):
     q = 1 - p
     mu = n * p
@@ -67,24 +71,24 @@ def normal_binomial(n, p, k):
     z1 = (k - 0.5 - mu) / sigma
     z2 = (k + 0.5 - mu) / sigma
     return normal_cdf(z2) - normal_cdf(z1)
- 
- 
+
+
 def normal_binomial_less_than(n, p, k):
     q = 1 - p
     mu = n * p
     sigma = math.sqrt(n * p * q)
     z = (k - 0.5 - mu) / sigma
     return normal_cdf(z)
- 
- 
+
+
 def normal_binomial_at_least(n, p, k):
     q = 1 - p
     mu = n * p
     sigma = math.sqrt(n * p * q)
     z = (k - 0.5 - mu) / sigma
     return 1 - normal_cdf(z)
- 
- 
+
+
 def normal_binomial_between(n, p, a, b):
     q = 1 - p
     mu = n * p
@@ -92,8 +96,8 @@ def normal_binomial_between(n, p, a, b):
     z1 = (a - 0.5 - mu) / sigma
     z2 = (b + 0.5 - mu) / sigma
     return normal_cdf(z2) - normal_cdf(z1)
- 
- 
+
+
 def print_answer(task_text, answer):
     print(f"Задание: {task_text}")
     print(f"Ответ: {answer:.4f}")
@@ -215,31 +219,56 @@ match n:
         priors = [0.5, 0.3, 0.2]
         probs = [0.01, 0.03, 0.02]
         print_answer("1а. Найти вероятность брака.", total_probability(priors, probs))
-        print_answer("1б. Найти вероятность того, что бракованный телефон изготовлен фирмой B.", bayes(priors, probs, 1))
+        print_answer(
+            "1б. Найти вероятность того, что бракованный телефон изготовлен фирмой B.",
+            bayes(priors, probs, 1),
+        )
 
     case 2:
         priors = [0.4, 0.35, 0.25]
         probs = [0.9, 0.8, 0.95]
-        print_answer("2а. Найти вероятность своевременной доставки.", total_probability(priors, probs))
-        print_answer("2б. Найти вероятность того, что заказ доставила третья служба.", bayes(priors, probs, 2))
+        print_answer(
+            "2а. Найти вероятность своевременной доставки.",
+            total_probability(priors, probs),
+        )
+        print_answer(
+            "2б. Найти вероятность того, что заказ доставила третья служба.",
+            bayes(priors, probs, 2),
+        )
 
     case 3:
         priors = [0.6, 0.25, 0.15]
         probs = [0.02, 0.05, 0.08]
-        print_answer("3а. Найти вероятность технического сбоя.", total_probability(priors, probs))
-        print_answer("3б. Найти вероятность того, что сбой произошел на смартфоне.", bayes(priors, probs, 2))
+        print_answer(
+            "3а. Найти вероятность технического сбоя.", total_probability(priors, probs)
+        )
+        print_answer(
+            "3б. Найти вероятность того, что сбой произошел на смартфоне.",
+            bayes(priors, probs, 2),
+        )
 
     case 4:
         priors = [0.2, 0.3, 0.5]
         probs = [0.9, 0.85, 0.95]
-        print_answer("4а. Найти вероятность получения детали высшего качества.", total_probability(priors, probs))
-        print_answer("4б. Найти вероятность того, что деталь изготовлена на третьем заводе.", bayes(priors, probs, 2))
+        print_answer(
+            "4а. Найти вероятность получения детали высшего качества.",
+            total_probability(priors, probs),
+        )
+        print_answer(
+            "4б. Найти вероятность того, что деталь изготовлена на третьем заводе.",
+            bayes(priors, probs, 2),
+        )
 
     case 5:
         priors = [0.5, 0.3, 0.2]
         probs = [0.05, 0.03, 0.10]
-        print_answer("5а. Найти долю платных подписчиков.", total_probability(priors, probs))
-        print_answer("5б. Найти вероятность того, что платный подписчик из страны Z.", bayes(priors, probs, 2))
+        print_answer(
+            "5а. Найти долю платных подписчиков.", total_probability(priors, probs)
+        )
+        print_answer(
+            "5б. Найти вероятность того, что платный подписчик из страны Z.",
+            bayes(priors, probs, 2),
+        )
 
     case 6:
         n, p = 20, 0.04
@@ -255,7 +284,9 @@ match n:
     case 8:
         n, p = 15, 0.7
         print_answer("8а. Ровно 10 человек сдадут экзамен.", bernoulli(n, p, 10))
-        print_answer("8б. Не менее 12 человек сдадут экзамен.", bernoulli_at_least(n, p, 12))
+        print_answer(
+            "8б. Не менее 12 человек сдадут экзамен.", bernoulli_at_least(n, p, 12)
+        )
 
     case 9:
         n, p = 5, 0.95
@@ -291,24 +322,42 @@ match n:
     case 15:
         lmbd = 4
         print_answer("15а. Ни одного вызова.", poisson(lmbd, 0))
-        print_answer("15б. От 3 до 6 вызовов включительно.", poisson_between(lmbd, 3, 6))
+        print_answer(
+            "15б. От 3 до 6 вызовов включительно.", poisson_between(lmbd, 3, 6)
+        )
 
     case 16:
-        print_answer("16. Локальная формула Муавра-Лапласа.", moivre_laplace_local(500, 0.03, 10))
+        print_answer(
+            "16. Локальная формула Муавра-Лапласа.", moivre_laplace_local(500, 0.03, 10)
+        )
 
     case 17:
-        print_answer("17. Интегральная формула Муавра-Лапласа.", moivre_laplace_integral(1000, 0.4, 380, 420))
+        print_answer(
+            "17. Интегральная формула Муавра-Лапласа.",
+            moivre_laplace_integral(1000, 0.4, 380, 420),
+        )
 
     case 18:
-        print_answer("18а. Не менее 500 голосов.", normal_binomial_at_least(900, 0.55, 500))
-        print_answer("18б. От 480 до 520 голосов включительно.", normal_binomial_between(900, 0.55, 480, 520))
+        print_answer(
+            "18а. Не менее 500 голосов.", normal_binomial_at_least(900, 0.55, 500)
+        )
+        print_answer(
+            "18б. От 480 до 520 голосов включительно.",
+            normal_binomial_between(900, 0.55, 480, 520),
+        )
 
     case 19:
         print_answer("19а. Ровно 200 успешных сделок.", normal_binomial(600, 0.3, 200))
-        print_answer("19б. От 170 до 210 успешных сделок включительно.", normal_binomial_between(600, 0.3, 170, 210))
+        print_answer(
+            "19б. От 170 до 210 успешных сделок включительно.",
+            normal_binomial_between(600, 0.3, 170, 210),
+        )
 
     case 20:
-        print_answer("20. Меньше 720 успешных соединений.", normal_binomial_less_than(800, 0.92, 720))
+        print_answer(
+            "20. Меньше 720 успешных соединений.",
+            normal_binomial_less_than(800, 0.92, 720),
+        )
 
     case _:
         print("Ошибка: Задание не найдено.")
