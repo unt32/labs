@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct arr {
 	int* data;
@@ -22,10 +23,7 @@ size_t empty(struct arr* a) {
 }
 
 void pop_back(struct arr* a) {
-	if(empty(a)) {
-		printf("AAA\n");
-		return;
-	}
+	assert(!empty(a));
 	a->size--;
 }
 

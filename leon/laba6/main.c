@@ -1,35 +1,41 @@
 #include <stdio.h>
 
+typedef int (*q)(const int, const int);
+
+int ba(const int a, const int b){
+	return a < b;
+}
+
 void swap(int *a, int *b) {
 	int t = *a;
 	*a = *b;
 	*b = t;
 }
 
-void heapify(int a[], int n, int i) {
+void heapify(int a[], int n, int i, q c) {
 	int best = i;
 	int left = 2 * i + 1;
 	int right = 2 * i + 2;
 
-	if (left < n && a[left] > a[best]) best = left;
-	if (right < n && a[right] > a[best]) best = right;
+	if (left < n && c(a[left] , a[best])) best = left;
+	if (right < n && c(a[right] , a[best])) best = right;
 
 	if (best == i) return;
 
 	swap(&a[i], &a[best]);
-	heapify(a, n, best);
+	heapify(a, n, best, c);
 }
 
-void heap_sort(int a[], int n) {
+void heap_sort(int a[], int n, q c) {
 	if (n <= 1) return;
 
 	for (int i = (n - 1) / 2; i >= 0; --i) {
-		heapify(a, n, i);
+		heapify(a, n, i, c);
 	}
 
 	for (int end = n - 1; end > 0; --end) {
 		swap(&a[0], &a[end]);
-		heapify(a, end, 0);
+		heapify(a, end, 0, c);
 	}
 }
 
@@ -42,7 +48,7 @@ int main(void) {
 	}
 	printf("\n");
 
-	heap_sort(a, n);
+	heap_sort(a, n, ba);
 
 	for (int i = 0; i < n; ++i) {
 		printf("%d ", a[i]);
