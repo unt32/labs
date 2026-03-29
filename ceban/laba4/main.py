@@ -20,11 +20,12 @@ def bellman_ford_shortest_path(n, edges, source=1):
             if H[i] != float("inf"):
                 diff = H[j] - H[i]
                 if diff > weight:
-                    H[j] = H[i] + weight
-                    changed = True
+                    new_Hj = H[i] + weight
                     print(
-                        f"\t{i} -> {j}, {weight}: H[{j}] - H[{i}] = {H[j]} - {H[i]} = {diff} > {weight} => H[{j}] = {H[j]}"
+                        f"\t{i} -> {j}, {weight}: H[{j}] - H[{i}] = {H[j]} - {H[i]} = {diff} > {weight} => H[{j}] = {new_Hj}"
                     )
+                    H[j] = new_Hj
+                    changed = True
                 else:
                     print(
                         f"\t{i} -> {j}, {weight}: H[{j}] - H[{i}] = {H[j]} - {H[i]} = {diff} =< {weight}"
